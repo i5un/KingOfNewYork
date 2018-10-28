@@ -115,6 +115,41 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Card.cpp" />
+    <ClCompile Include="Deck.cpp" />
+    <ClCompile Include="Dice_Manager.cpp" />
+    <ClCompile Include="Driver.cpp" />
+    <ClCompile Include="GameManager.cpp" />
+    <ClCompile Include="Map.cpp" />
+    <ClCompile Include="MapLoader.cpp" />
+    <ClCompile Include="Monsters.cpp" />
+    <ClCompile Include="Node.cpp" />
+    <ClCompile Include="Player.cpp" />
+    <ClCompile Include="TokenManager.cpp" />
+    <ClCompile Include="UnitManager.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Card.h" />
+    <ClInclude Include="Deck.h" />
+    <ClInclude Include="Dice_Manager.h" />
+    <ClInclude Include="GameManager.h" />
+    <ClInclude Include="json.hpp" />
+    <ClInclude Include="Map.h" />
+    <ClInclude Include="MapLoader.h" />
+    <ClInclude Include="Monsters.h" />
+    <ClInclude Include="Node.h" />
+    <ClInclude Include="Player.h" />
+    <ClInclude Include="TokenManager.h" />
+    <ClInclude Include="UnitManager.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Cards.json" />
+    <None Include="KingOfNewYork.map" />
+    <None Include="map1.map" />
+    <None Include="map2.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <Text Include="README.txt" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

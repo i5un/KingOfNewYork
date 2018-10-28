@@ -1,0 +1,532 @@
+{
+	"cards": [
+		{
+			"id": 0,
+			"imgURL": "cards/000.png",
+			"name": "Statue Of Liberty",
+			"type": "goal",
+			"cost": 0,
+			"desc": "Take this card when you roll at least 3 OUCH.\nGain 3 VICTORY_POINT when you take this card.\nLose 3 VICTORY_POINT when you lose this card."
+		},
+		{
+			"id": 1,
+			"imgURL": "cards/001.png",
+			"name": "Superstar",
+			"type": "goal",
+			"cost": 0,
+			"desc": "Take this card when you roll at least 3 VICTORY. Gain 1 VICTORY_POINT, +1 VICTORY_POINT per additional VICTORY you rolled.\nWhile you have this card, you gain 1 VICTORY_POINT for each VICTORY you roll."
+		},
+		{
+			"id": 2,
+			"imgURL": "cards/002.png",
+			"name": "Diva",
+			"type": "keep",
+			"cost": 5,
+			"desc": "The other monsters need 4 VICTORY to take Superstar from you."
+		},
+		{
+			"id": 3,
+			"imgURL": "cards/003.png",
+			"name": "Hunter",
+			"type": "keep",
+			"cost": 5,
+			"desc": "Heal 1 damage each time you destroy an Infantry."
+		},
+		{
+			"id": 4,
+			"imgURL": "cards/004.png",
+			"name": "Central Park",
+			"type": "discard",
+			"cost": 5,
+			"desc": "Buy this card for 1 ENERGY_POINT less if you are in MANHATTAN.\n+2 VICTORY_POINT and heal 2 damage."
+		},
+		{
+			"id": 5,
+			"imgURL": "cards/005.png",
+			"name": "Curse",
+			"type": "keep",
+			"cost": 4,
+			"desc": "When you deal damage to Monsters, give each a Curse token. Each time a Monster wants to reroll OUCH, he must spend 1 ENERGY_POINT for each Curse token he has.\nA Monster may use a HEART to discard a Curse token instead of using it to heal."
+		},
+		{
+			"id": 6,
+			"imgURL": "cards/006.png",
+			"name": "Jinx Aura",
+			"type": "keep",
+			"cost": 4,
+			"desc": "Other Monsters must always use all their rerolls. (They still get to choose which dice to reroll.)"
+		},
+		{
+			"id": 7,
+			"imgURL": "cards/007.png",
+			"name": "Towering Titan",
+			"type": "keep",
+			"cost": 10,
+			"desc": "Add 2 ATTACK to your result."
+		},
+		{
+			"id": 8,
+			"imgURL": "cards/008.png",
+			"name": "Painbow",
+			"type": "keep",
+			"cost": 5,
+			"desc": "If your results are...\n-- 2 DESTRUCTION, you get an extra ATTACK.\n-- 4 DESTRUCTION, you get an extra 2 ATTACK.\n-- 6 DESTRUCTION, you win the game!"
+		},
+		{
+			"id": 9,
+			"imgURL": "cards/009.png",
+			"name": "The Unisphere",
+			"type": "discard",
+			"cost": 5,
+			"desc": "Buy this card for 1 ENERGY_POINT less if you are in QUEENS.\n+4 VICTORY_POINT."
+		},
+		{
+			"id": 10,
+			"imgURL": "cards/010.png",
+			"name": "Sharp Shooter",
+			"type": "keep",
+			"cost": 4,
+			"desc": "You can destroy Jets that are not in your borough.\nGain 1 VICTORY_POINT each time you destroy a Jet."
+		},
+		{
+			"id": 11,
+			"imgURL": "cards/011.png",
+			"name": "Stomp",
+			"type": "keep",
+			"cost": 4,
+			"desc": "Add 1 DESTRUCTION to your result."
+		},
+		{
+			"id": 12,
+			"imgURL": "cards/012.png",
+			"name": "King of Queens",
+			"type": "keep",
+			"cost": 5,
+			"desc": "Gain 1 ENERGY_POINT and heal 1 damage when you start your turn in Queens."
+		},
+		{
+			"id": 13,
+			"imgURL": "cards/013.png",
+			"name": "Power Substation",
+			"type": "discard",
+			"cost": 5,
+			"desc": "+1 VICTORY_POINT, +8 ENERGY_POINT and take 3 damage."
+		},
+		{
+			"id": 14,
+			"imgURL": "cards/014.png",
+			"name": "FlatIron Building",
+			"type": "discard",
+			"cost": 3,
+			"desc": "Buy this card for 1 ENERGY_POINT less if you are in MANHATTAN.\n+2 VICTORY_POINT."
+		},
+		{
+			"id": 15,
+			"imgURL": "cards/015.png",
+			"name": "Super Speed",
+			"type": "keep",
+			"cost": 4,
+			"desc": "You can have an extra move before rolling your dice."
+		},
+		{
+			"id": 16,
+			"imgURL": "cards/016.png",
+			"name": "Drain",
+			"type": "keep",
+			"cost": 4,
+			"desc": "Take 2 ENERGY_POINT from Monsters that attack you."
+		},
+		{
+			"id": 17,
+			"imgURL": "cards/017.png",
+			"name": "Power Trap",
+			"type": "keep",
+			"cost": 4,
+			"desc": "Each time a Monster gains at least 3 ENERGY_POINT in a turn, he must pay you 1 ENERGY_POINT."
+		},
+		{
+			"id": 18,
+			"imgURL": "cards/018.png",
+			"name": "Bullet Proof",
+			"type": "keep",
+			"cost": 4,
+			"desc": "Whenever you take damage because of rolling OUCH, take 1 less damage."
+		},
+		{
+			"id": 19,
+			"imgURL": "cards/019.png",
+			"name": "General Ellis",
+			"type": "discard",
+			"cost": 5,
+			"desc": "You can only buy this card if you destroyed a Tank this turn.\n+3 VICTORY_POINT and all Monsters take 1 damage."
+		},
+		{
+			"id": 20,
+			"imgURL": "cards/020.png",
+			"name": "Coney Island",
+			"type": "discard",
+			"cost": 4,
+			"desc": "Buy this card for 1 ENERGY_POINT less if you are in BROOKLYN.\n+3 VICTORY_POINT."
+		},
+		{
+			"id": 21,
+			"imgURL": "cards/021.png",
+			"name": "Personal Spotlight",
+			"type": "keep",
+			"cost": 5,
+			"desc": "Gain 1 VICTORY_POINT each turn you rolled at least 1 VICTORY."
+		},
+		{
+			"id": 22,
+			"imgURL": "cards/022.png",
+			"name": "Shadow Double",
+			"type": "keep",
+			"cost": 12,
+			"desc": "Whenever you attack you deal double damage."
+		},
+		{
+			"id": 23,
+			"imgURL": "cards/023.png",
+			"name": "Tesla Antennae",
+			"type": "keep",
+			"cost": 4,
+			"desc": "Monsters that have more HEART_POINT than you take 1 extra damage whenever you attack them."
+		},
+		{
+			"id": 24,
+			"imgURL": "cards/024.png",
+			"name": "Leveler",
+			"type": "keep",
+			"cost": 5,
+			"desc": "Gain 1 VICTORY_POINT each turn that you destroy at least one Building."
+		},
+		{
+			"id": 25,
+			"imgURL": "cards/025.png",
+			"name": "Air Force One",
+			"type": "discard",
+			"cost": 6,
+			"desc": "You can only buy this card if you destroyed a Jet this turn.\n+4 VICTORY_POINT and all Units attack all Monsters in their boroughs."
+		},
+		{
+			"id": 26,
+			"imgURL": "cards/026.png",
+			"name": "Drink The Hudson",
+			"type": "discard",
+			"cost": 12,
+			"desc": "Buy this card for 1 ENERGY_POINT less if you are in MANHATTAN, BROOKLYN, or STATEN ISLAND.\n+13 ENERGY_POINT, +1 VICTORY_POINT, and heal 2 damage."
+		},
+		{
+			"id": 27,
+			"imgURL": "cards/027.png",
+			"name": "Carapace",
+			"type": "keep",
+			"cost": 3,
+			"desc": "Your HEART_POINT maximum is increased by 2 as long as you have this card. For each OUCH you roll, place a Carapace token on this card.\nYou can discard this card to heal 1 damage for each Carapace token on it."
+		},
+		{
+			"id": 28,
+			"imgURL": "cards/028.png",
+			"name": "Fury",
+			"type": "keep",
+			"cost": 4,
+			"desc": "Add 1 DESTRUCTION and 1 ENERGY_POINT to your roll if you are in a borough with at least 3 Units."
+		},
+		{
+			"id": 29,
+			"imgURL": "cards/029.png",
+			"name": "Pheonix Blood",
+			"type": "keep",
+			"cost": 4,
+			"desc": "Gain 1 ENERGY_POINT each time you take damage."
+		},
+		{
+			"id": 30,
+			"imgURL": "cards/030.png",
+			"name": "Terminal Rage",
+			"type": "keep",
+			"cost": 4,
+			"desc": "Take another turn when you buy this card.\nFrom now on you can no longer reroll ATTACK."
+		},
+		{
+			"id": 31,
+			"imgURL": "cards/031.png",
+			"name": "New York Marathon",
+			"type": "discard",
+			"cost": 6,
+			"desc": "While this card is available for purchase, Monsters must pay 2 ENERGY_POINT to move (including fleeing from MANHATTAN), unless the movement is obligatory.\n+2 VICTORY_POINT, +2 ENERGY_POINT, and heal 2 damage."
+		},
+		{
+			"id": 32,
+			"imgURL": "cards/032.png",
+			"name": "Photo Op",
+			"type": "discard",
+			"cost": 4,
+			"desc": "Choose a Monster. Gain 1 VICTORY_POINT for each damage you dealt to that Monster this turn."
+		},
+		{
+			"id": 33,
+			"imgURL": "cards/033.png",
+			"name": "Trash Thrower",
+			"type": "keep",
+			"cost": 5,
+			"desc": "Monsters you attack lose 1 VICTORY_POINT."
+		},
+		{
+			"id": 34,
+			"imgURL": "cards/034.png",
+			"name": "Universal Soldier",
+			"type": "keep",
+			"cost": 6,
+			"desc": "You can change some or all of your HEART to ATTACK, and/or your ATTACK to HEART."
+		},
+		{
+			"id": 35,
+			"imgURL": "cards/035.png",
+			"name": "Can Opener",
+			"type": "keep",
+			"cost": 4,
+			"desc": "You only need 3 DESTRUCTION to destroy a Tank."
+		},
+		{
+			"id": 36,
+			"imgURL": "cards/036.png",
+			"name": "Ego Trip",
+			"type": "keep",
+			"cost": 3,
+			"desc": "Gain 1 ENERGY_POINT when you take Superstar and when you start your turn with it."
+		},
+		{
+			"id": 37,
+			"imgURL": "cards/037.png",
+			"name": "Subway",
+			"type": "discard",
+			"cost": 10,
+			"desc": "Heal 2 damage and take another turn.\nDuring this extra turn, you can move as often as you like, whenever you like."
+		},
+		{
+			"id": 38,
+			"imgURL": "cards/038.png",
+			"name": "Hotland Tunnel",
+			"type": "discard",
+			"cost": 9,
+			"desc": "Buy this card for 1 ENERGY_POINT less if you are in MANHATTAN.\n+6 VICTORY_POINT and all Monsters gain 3 ENERGY_POINT."
+		},
+		{
+			"id": 39,
+			"imgURL": "cards/039.png",
+			"name": "Regeneration",
+			"type": "keep",
+			"cost": 5,
+			"desc": "Heal 1 damage at the start of your turn."
+		},
+		{
+			"id": 40,
+			"imgURL": "cards/040.png",
+			"name": "WebSpinner",
+			"type": "keep",
+			"cost": 6,
+			"desc": "When you deal damage to Monsters, give them a Web token. A Monster has one fewer reroll on his turn for each Web token he has.\nA Monster can choose to use an ATTACK to discard a Web token instead of using it to attack."
+		},
+		{
+			"id": 41,
+			"imgURL": "cards/041.png",
+			"name": "Stink Attack",
+			"type": "keep",
+			"cost": 5,
+			"desc": "Whenever you move, you may disperse up to four Units from your destination borough. Each dispersed Unit must move to a separate borough."
+		},
+		{
+			"id": 42,
+			"imgURL": "cards/042.png",
+			"name": "Of Another World",
+			"type": "keep",
+			"cost": 6,
+			"desc": "You can use HEART_POINT as ENERGY_POINT and ENERGY_POINT as HEART_POINT."
+		},
+		{
+			"id": 43,
+			"imgURL": "cards/043.png",
+			"name": "Next Stage",
+			"type": "discard",
+			"cost": 4,
+			"desc": "Lose all your VICTORY_POINT.\nGain 1 ENERGY_POINT or heal 1 damage for each VICTORY_POINT you lost this way."
+		},
+		{
+			"id": 44,
+			"imgURL": "cards/044.png",
+			"name": "Columbia University",
+			"type": "discard",
+			"cost": 6,
+			"desc": "Buy this card for 1 ENERGY_POINT less if you are in MANHATTAN.\n+2 VICTORY_POINT and take the next KEEP card revealed, for free."
+		},
+		{
+			"id": 45,
+			"imgURL": "cards/045.png",
+			"name": "Natural Selection",
+			"type": "keep",
+			"cost": 2,
+			"desc": "Gain 4 ENERGY_POINT and heal 4 damage when you buy this card.\nYou roll an extra die.\nIf you end your turn with at least 1 VICTORY, you lose this card, and all your HEART_POINT."
+		},
+		{
+			"id": 46,
+			"imgURL": "cards/046.png",
+			"name": "Antimatter Pellets",
+			"type": "keep",
+			"cost": 4,
+			"desc": "Monsters you attack must roll a die.\nThose that roll OUCH take double damage."
+		},
+		{
+			"id": 47,
+			"imgURL": "cards/047.png",
+			"name": "Tourist",
+			"type": "keep",
+			"cost": 6,
+			"desc": "Place a Souvenir token in your current borough, and in each borough you enter that does not already have a Souvenir token. Gain 1 VICTORY_POINT and 1 ENERGY_POINT each time you place a Souvenir token."
+		},
+		{
+			"id": 48,
+			"imgURL": "cards/048.png",
+			"name": "Violent Star",
+			"type": "keep",
+			"cost": 3,
+			"desc": "Deal 2 damage to the Monster from whom you take Superstar.\nDeal 1 damage to the Monster who takes Superstar from you."
+		},
+		{
+			"id": 49,
+			"imgURL": "cards/049.png",
+			"name": "Subterranean Cable",
+			"type": "discard",
+			"cost": 0,
+			"desc": "+4 ENERGY_POINT and take 4 damage."
+		},
+		{
+			"id": 50,
+			"imgURL": "cards/050.png",
+			"name": "Brooklyn Bridge",
+			"type": "discard",
+			"cost": 6,
+			"desc": "Buy this card for 1 ENERGY_POINT less if you are in BROOKLYN.\n+4 VICTORY_POINT."
+		},
+		{
+			"id": 51,
+			"imgURL": "cards/051.png",
+			"name": "Chameleon",
+			"type": "keep",
+			"cost": 4,
+			"desc": "You can discard as many VICTORY as you wish.\nFor each VICTORY discarded, you can change the face of one of the dice you haven't resolved."
+		},
+		{
+			"id": 52,
+			"imgURL": "cards/052.png",
+			"name": "Scavenger",
+			"type": "keep",
+			"cost": 3,
+			"desc": "You can buy KEEP cards from the discard by spending 1 ENERGY_POINT less than their cost."
+		},
+		{
+			"id": 53,
+			"imgURL": "cards/053.png",
+			"name": "Trophy Hunter",
+			"type": "keep",
+			"cost": 5,
+			"desc": "Gain 1 VICTORY_POINT each time you destroy a Unit."
+		},
+		{
+			"id": 54,
+			"imgURL": "cards/054.png",
+			"name": "Hailing Cars",
+			"type": "keep",
+			"cost": 5,
+			"desc": "You may add 2 DESTRUCTION to your result.\nIf you do you can destroy only Units."
+		},
+		{
+			"id": 55,
+			"imgURL": "cards/055.png",
+			"name": "Tesla Cannon",
+			"type": "discard",
+			"cost": 5,
+			"desc": "+2 VICTORY_POINT.\nAll Monsters (including you) must discard one KEEP card."
+		},
+		{
+			"id": 56,
+			"imgURL": "cards/056.png",
+			"name": "Climb The Empire State Building",
+			"type": "keep",
+			"cost": 3,
+			"desc": "If you roll 1 of each dice type in MANHATTAN, gain 2 VICTORY_POINT and take another turn."
+		},
+		{
+			"id": 57,
+			"imgURL": "cards/057.png",
+			"name": "Overload",
+			"type": "keep",
+			"cost": 0,
+			"desc": "Gain 4 ENERGY_POINT when you buy this card.\nGain 1 ENERGY_POINT less when you roll any amount of ENERGY."
+		},
+		{
+			"id": 58,
+			"imgURL": "cards/058.png",
+			"name": "Chinatown Regular",
+			"type": "keep",
+			"cost": 3,
+			"desc": "Heal 2 damage when you enter MANHATTAN."
+		},
+		{
+			"id": 59,
+			"imgURL": "cards/059.png",
+			"name": "Long Neck",
+			"type": "keep",
+			"cost": 3,
+			"desc": "You only need 2 DESTRUCTION to destroy a Jet."
+		},
+		{
+			"id": 60,
+			"imgURL": "cards/060.png",
+			"name": "Extra Head",
+			"type": "keep",
+			"cost": 7,
+			"desc": "You get 1 extra die."
+		},
+		{
+			"id": 61,
+			"imgURL": "cards/061.png",
+			"name": "Yankee Stadium",
+			"type": "discard",
+			"cost": 9,
+			"desc": "Buy this card for 1 ENERGY less if you are in the BRONX.\n+5 VICTORY_POINT and heal 5 damage."
+		},
+		{
+			"id": 62,
+			"imgURL": "cards/062.png",
+			"name": "Artificial Heart",
+			"type": "keep",
+			"cost": 4,
+			"desc": "You can change soome or all of your HEART to ENERGY."
+		},
+		{
+			"id": 63,
+			"imgURL": "cards/063.png",
+			"name": "Broadway Star",
+			"type": "keep",
+			"cost": 5,
+			"desc": "Gain 1 VICTORY_POINT when you take Superstar, and when you start your turn with it."
+		},
+		{
+			"id": 64,
+			"imgURL": "cards/064.png",
+			"name": "Seismic Ray",
+			"type": "keep",
+			"cost": 4,
+			"desc": "Spend 1 ENERGY_POINT to use your DESTRUCTION in any borough other than where you are."
+		},
+		{
+			"id": 65,
+			"imgURL": "cards/065.png",
+			"name": "Fireball",
+			"type": "keep",
+			"cost": 4,
+			"desc": "Your attacks also deal damage to the other Monsters in your borough."
+		}
+	]
+}
