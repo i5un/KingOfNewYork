@@ -49,6 +49,7 @@ void Deck::Shuffle() {
 
 
 void Deck::printDeck() {
+	cout << ">> " << cards.size() +shop.size() << " cards created..." << endl;
 	for (size_t i = 0; i < cards.size(); i++)
 	{
 		cout << (cards)[i]->getId() << " : " << (cards)[i]->getName() << endl;

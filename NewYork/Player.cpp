@@ -1,38 +1,54 @@
 #include "Player.h"
 #include "Map.h"
 
-vector<Player*> Player::players;
+#define cprint std::cout
+
 Player* Player::celebrityHolder;
 Player* Player::statueHolder;
+vector<std::string> Player::Monsters;
 
 Player::Player()
 	:dm(new Dice_Manager()),currentLoc(nullptr)
 {
-	players.push_back(this);
+	if (Monsters.size() == 0)setupMonsters();
 }
 
 
 Player::~Player()
 {
+	delete dm;
 }
 
 void Player::pickMonster() {
-	int input;
-	while (true) {
+	if (Monsters.size() != 1) {
+		std::string input;
+		int selection;
 		cout << "Choose a monster:" << endl;
-		Monsters::displayMonsters();
-		cin >> input;
-		cin.get();
-		Monsters::Monster* result = Monsters::pickMonster(input);
-		if (result != nullptr) {
-			cout << ">>You've picked " << result->getName() << endl;
-			monster = result;
-			break;
+		for (size_t i = 0; i < Monsters.size(); i++)
+		{
+			cprint << i << "-" << Monsters[i] << endl;
 		}
-		else {
-			cout << ">>Invalid entry. Please try again... " << endl;
+		while (true) {
+			try
+			{
+				std::getline(std::cin, input);
+				selection = stoi(input);
+				if (selection < 0 || selection>5)throw exception();
+				name = Monsters[selection];
+				Monsters.erase(Monsters.begin() + selection);
+				break;
+			}
+			catch (const std::exception&)
+			{
+				std::cout << ">> Invalid selection, please try again..." << std::endl;
+				continue;
+			}
 		}
 	}
+	else {
+		name = Monsters[0];
+	}
+	cprint << ">> " << name << "has been chosen!" << endl;
 }
 
 void Player::RollDice() {
@@ -55,7 +71,7 @@ void Player::ResolveDice(map<string, int>& result) {
 		else if (x.first == "Attack") {
 			if (currentLoc->getName().find("Manhattan")!=string::npos) {
 				// Player is in Manhattan and will attack everyone else
-				for (auto &player : std::as_const(players)) {
+				for (auto &player : std::as_const(GameManager::getPlayers())) {
 					if (player != this) {
 						cout << ">>Attacking..." << endl;
 						player->takeDamage(x.second);
@@ -64,7 +80,7 @@ void Player::ResolveDice(map<string, int>& result) {
 			}
 			else {
 				//Player is not in Manhattan and will attack whoever is in Manhattan
-				for (auto &target : as_const(players)) {
+				for (auto &target : as_const(GameManager::getPlayers())) {
 					if (target->getCurrentLoc()->getName().find("Manhattan") != string::npos) {
 						target->takeDamage(x.second);
 					}
@@ -95,7 +111,7 @@ void Player::ResolveDice(map<string, int>& result) {
 
 				// If current location is part of Manhattan
 				if (currentLoc->getName().find("Manhattan") != string::npos) {
-					vector<Node*>* ManhattanAreas = MapLoader::currentMap->getManhattanArea();
+					vector<Node*>* ManhattanAreas = GameManager::getMap()->getManhattanArea();
 					for (auto &zone : as_const(*ManhattanAreas)) {
 						zone->getUnits(units);
 					}
@@ -153,7 +169,7 @@ void Player::ResolveDice(map<string, int>& result) {
 				currentLoc->attack();
 				break;
 			default:
-				MapLoader::currentMap->globalAttack();
+				GameManager::getMap()->globalAttack();
 				break;
 			}
 		}
@@ -169,7 +185,7 @@ void Player::Move(Node* des) {
 	currentLoc = des;
 	des->enterZone(this);
 	if (des->getName().find("Manhattan") != string::npos) {
-		MapLoader::currentMap->setInManhattan(this);
+		GameManager::getMap()->setInManhattan(this);
 	}
 }
 
@@ -186,18 +202,19 @@ bool Player::BuyCards(Card* card,int index) {
 	Deck::next(index);
 }
 
-string Player::getName() {
-	return monster->getName();
-}
-
-Node* Player::getCurrentLoc() {
-	return currentLoc;
-}
-
 void Player::takeDamage(int dmg) {
 	cout << ">>" << getName() << " has taken " << dmg << " damage!" << endl;
 	health -= dmg;
 	if (health <= 0) {
 		cout << ">>" << getName() << " is defeated!!" << endl;
 	}
+}
+
+void Player::setupMonsters() {
+	Monsters.push_back("Capitain Fish");
+	Monsters.push_back("Sheriff");
+	Monsters.push_back("Mantis");
+	Monsters.push_back("Rob");
+	Monsters.push_back("Drakonis");
+	Monsters.push_back("Kong");
 }

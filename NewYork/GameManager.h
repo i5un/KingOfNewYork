@@ -1,7 +1,10 @@
 #pragma once
-#include<string>
-#include<iostream>
-#include<Windows.h>
+#include<vector>
+
+#include"MapLoader.h"
+#include"Map.h"
+#include"Player.h"
+#include"Deck.h"
 
 class GameManager
 {
@@ -9,8 +12,14 @@ public:
 	class Game {
 
 	};
-	void StartGame();
-	GameManager();
-	~GameManager();
+	void static StartGame(bool debug=false);
+	static Map* getMap() { return currentMap; }
+	static vector<Player*>& getPlayers() { return players; }
+private:
+	static int activePlayer;
+	static Map* currentMap;
+	static vector<Player*> players;
+	void static SetupPlayers();
+	void static GameLoop();
 };
 

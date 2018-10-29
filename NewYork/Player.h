@@ -2,13 +2,13 @@
 #include<iostream>
 #include<string>
 #include<map>
-#include"Monsters.h"
+
 #include"Dice_Manager.h"
-#include"MapLoader.h"
 #include"Node.h"
 #include"Card.h"
 #include"Deck.h"
 #include"UnitManager.h"
+#include"GameManager.h"
 
 using namespace std;
 
@@ -23,19 +23,20 @@ public:
 	void takeDamage(int);
 
 	bool BuyCards(Card*,int);
-	string getName();
-	Node* getCurrentLoc();
+	string getName(){ return name; }
+	Node* getCurrentLoc() { return currentLoc; }
 private:
-	static vector<Player*> players;
 	static Player* celebrityHolder;
 	static Player* statueHolder;
+	static vector<std::string> Monsters;
 
+	std::string name;
 	int energy,star,health;
-	Monsters::Monster* monster;
 	vector<Card*>upgrades;
 	Dice_Manager* dm;
 	Node* currentLoc;
 
+	void setupMonsters();
 	void ResolveDice(map<string, int>&);
 };
 

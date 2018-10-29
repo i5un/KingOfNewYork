@@ -118,11 +118,11 @@
     <ClCompile Include="Card.cpp" />
     <ClCompile Include="Deck.cpp" />
     <ClCompile Include="Dice_Manager.cpp" />
-    <ClCompile Include="Driver.cpp" />
+    <ClCompile Include="Driver_p1.cpp" />
+    <ClCompile Include="Driver_p2.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapLoader.cpp" />
-    <ClCompile Include="Monsters.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="Player.cpp" />
     <ClCompile Include="TokenManager.cpp" />
@@ -136,7 +136,6 @@
     <ClInclude Include="json.hpp" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapLoader.h" />
-    <ClInclude Include="Monsters.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="Player.h" />
     <ClInclude Include="TokenManager.h" />
@@ -144,9 +143,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Cards.json" />
-    <None Include="KingOfNewYork.map" />
-    <None Include="map1.map" />
-    <None Include="map2.map" />
+    <None Include="map\KingOfNewYork.map" />
+    <None Include="map\map1.map" />
+    <None Include="map\map2.map" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="README.txt" />
