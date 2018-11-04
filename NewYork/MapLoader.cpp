@@ -53,10 +53,10 @@ Map* MapLoader::loadMap(std::string mapName)
 				}
 			}
 			catch (...) {
-				std::cout << ">>Invalid selection, please try again..." << std::endl;
+				std::cout << ">> Invalid selection, please try again..." << std::endl;
 				continue;
 			}		
-			std::cout << "Loading " << files[selection] << std::endl;
+			std::cout << ">> Loading... " << files[selection] << std::endl;
 			break;
 		} while (true);
 	}
@@ -178,21 +178,21 @@ constructMap:
 				}
 			}
 			mapFile.close();
-		}else throw exception("Unable to open file");
+		}else throw exception(">> Unable to open file");
 	}
 	catch (const std::exception e) {
 		//std::cout << e.what() << std::endl;
-		throw exception("Invalid map file format!");
+		throw exception(">> Invalid map file format!");
 	}
 
 	/*
 		Create a new map if no error has occured
 	*/
-	Map* currentMap = new Map(name, zones, edges, starting, name == "KingOfNewYork" ? false : true);
-	cout << "Map: " << name << " loaded" << endl;
+	Map* currentMap = new Map(name, zones, edges, starting);
+	cout << "\n>> Map: " << name << " loaded\n" << endl;
 	if (currentMap->verifyMap()) return currentMap;
 	
 	//Validation failled
 	delete currentMap;
-	throw exception("Invalid map created.");
+	throw exception(">> Invalid map created.");
 }

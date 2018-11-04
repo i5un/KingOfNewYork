@@ -1,18 +1,15 @@
 #include "Player.h"
 #include "Map.h"
 
-#define cprint std::cout
-
-Player* Player::celebrityHolder;
-Player* Player::statueHolder;
 vector<std::string> Player::Monsters;
 
 Player::Player()
-	:dm(new Dice_Manager()),currentLoc(nullptr)
+	:dm(new Dice_Manager()),currentLoc(GameManager::instance()->getMap()->getZoneZero()),dead(false),health(10)
 {
-	if (Monsters.size() == 0)setupMonsters();
+	if (Monsters.size() == 0) setupMonsters();
+	options["roll"] = false;
+	options["move"] = false;
 }
-
 
 Player::~Player()
 {
@@ -23,191 +20,357 @@ void Player::pickMonster() {
 	if (Monsters.size() != 1) {
 		std::string input;
 		int selection;
+
 		cout << "Choose a monster:" << endl;
 		for (size_t i = 0; i < Monsters.size(); i++)
 		{
-			cprint << i << "-" << Monsters[i] << endl;
+			prt << i << "-" << Monsters[i] << nl;
 		}
 		while (true) {
 			try
 			{
 				std::getline(std::cin, input);
 				selection = stoi(input);
-				if (selection < 0 || selection>5)throw exception();
+				if (selection < 0 || selection>5) throw exception();
 				name = Monsters[selection];
 				Monsters.erase(Monsters.begin() + selection);
 				break;
 			}
-			catch (const std::exception&)
+			catch (const std::exception& e)
 			{
-				std::cout << ">> Invalid selection, please try again..." << std::endl;
-				continue;
+				pres << e.what() << nl;
 			}
 		}
 	}
 	else {
 		name = Monsters[0];
 	}
-	cprint << ">> " << name << "has been chosen!" << endl;
+	pres<< name << "has been chosen!" << nl;
+}
+
+bool Player::PlayTurn() {
+	prt << getName() <<"'s turn..."<< nl;
+	//Evaluate card effects
+
+	std::string input;
+	int selection;
+	bool endTurn = false;
+	for (auto& p : options) p.second = false;
+
+	while (!endTurn) {		
+		prt << "Choose from the following options..." << nl;
+		prt << " 0-Roll Dice\n 1-Move\n 2-Buy Cards\n 3-End Turn" << nl;
+
+		try {
+			std::getline(std::cin, input);
+			selection = stoi(input);
+
+			switch (selection) {
+			case 0:
+				if (options["roll"]) {
+					pres << "You've already rolled this turn!" << nl;
+				}
+				else {
+					RollDice();
+				}
+				break;
+			case 1:
+				if (options["move"]) {
+					pres << "You've already moved this turn!" << nl;
+				}
+				else if (!options["roll"]) {
+					pres << "You have to roll your dice first before moving!" << nl;
+				}
+				else {
+					Move();
+				}
+				break;
+			case 2:
+				if (!options["roll"] ) {
+					pres << "You must roll your dice before buying cards!" << nl;
+				}
+				else {
+					BuyCards();
+				}
+				break;
+			case 3:
+				endTurn = true;
+				break;
+			default:
+				throw exception();
+			}
+		}
+		catch (const exception& e) {
+			pres << e.what() << nl;
+		}
+	}
+	if (star >= 20) return true;
+	pres << getName() << " finished his/her turn!" << nl;
+	return false;
 }
 
 void Player::RollDice() {
-	map<string, int>* result = dm->rollDice();
-	ResolveDice(*result);
+	ls
+	options["roll"] = true;
+	map<string,int> result = dm->rollDice(); //get the reference of the result from Dice_Manager
+	ResolveDice(result);
 }
 
-void Player::ResolveDice(map<string, int>& result) {
-	cout << ">>Resolving..." << endl;
-	for (auto const& x:result)
-	{
-		if (x.first == "Energy") {
-			energy += x.second;
-			cout << ">>Gained " << x.second << " energy" << endl;
-		}
-		else if (x.first == "Heal") {
-			health += x.second;
-			cout << ">>Gained " << x.second << " health points" << endl;
-		}
-		else if (x.first == "Attack") {
-			if (currentLoc->getName().find("Manhattan")!=string::npos) {
-				// Player is in Manhattan and will attack everyone else
-				for (auto &player : std::as_const(GameManager::getPlayers())) {
-					if (player != this) {
-						cout << ">>Attacking..." << endl;
-						player->takeDamage(x.second);
-					}
-				}
-			}
-			else {
-				//Player is not in Manhattan and will attack whoever is in Manhattan
-				for (auto &target : as_const(GameManager::getPlayers())) {
-					if (target->getCurrentLoc()->getName().find("Manhattan") != string::npos) {
-						target->takeDamage(x.second);
-					}
-				}
-			}			
-		}
-		else if (x.first=="Celebrity") {
-			//check if player has Celebrity card
-			if (celebrityHolder == this) {
-				star += x.second;
-			}
-			else {
-				if (x.second >= 3) {
-					celebrityHolder = this;
-					star += x.second - 2;
-				}
-			}
-		}
-		else if (x.first == "Destruction") {
-			int points = x.second;
-			int option;
-			string input;
-		
-			while (true) {
-				std::vector<Building*> units;
-				std::cout << "You have " << points << " destruction points left. Choose unit to attack" << endl;
-				std::cout << "Press Enter to skip this phase" << endl;
+int Player::getRank() {
+	map<string, int> result = dm->rollDice(2,false);
+	return result["Attack"];
+}
 
-				// If current location is part of Manhattan
-				if (currentLoc->getName().find("Manhattan") != string::npos) {
-					vector<Node*>* ManhattanAreas = GameManager::getMap()->getManhattanArea();
-					for (auto &zone : as_const(*ManhattanAreas)) {
-						zone->getUnits(units);
-					}
+void Player::ResolveDice(map<string,int>& result) {
+	string input;
+	int selection;
+	bool done = false;
+	
+	//Keeps track which dice got resolved
+	vector<pair<pair<string,int>, bool>> tracker;
+	for (const auto& d : result) {
+		tracker.push_back(make_pair(make_pair(d.first,d.second), false));
+	}
+
+	while (!done) {
+		prt << "Choose one to resolve..." << nl;
+		for (size_t i = 0; i < tracker.size(); i++)
+		{
+			if(!tracker[i].second)
+				prt << i << "-[" << tracker[i].first.first << "] x" << tracker[i].first.second << nl;
+		}
+
+		//Inner loop to get user selection
+		while (true) {
+			try
+			{
+				getline(std::cin, input);
+				selection = stoi(input);
+				if (selection > tracker.size() || tracker[selection].second)
+					throw InputException();
+				break;
+			}
+			catch (const std::exception& e)
+			{
+				pres << e.what() << nl;
+			}
+		}
+
+		//Resolving...
+
+		string type = tracker[selection].first.first;
+		tracker[selection].second = true;
+
+		if (type == "Energy") {
+			energy += result[type];
+			pres << "Gained " << result[type] << " Energy points!" << nl;
+		}
+		else if (type == "Heal") {
+			if (health >= 10) {
+				pres << "Already at max health!" << nl;
+			}
+			else {
+				int diff = 10 - health;
+				if (result[type] > diff) {
+					health = 10;
 				}
 				else {
-					getCurrentLoc()->getUnits(units);
+					diff = result[type];
+					health += diff;
 				}
-
-				for (size_t i = 0; i < units.size(); i++)
-				{
-					std::cout << i << "-"; 
-					units[i]->printInfo();
-				}
-
-				getline(cin, input);
-				if (input == "") break;
-
-				try {
-					option = stoi(input);
-					if (option<0 || option>units.size() - 1) {
-						std::cout << ">>Invalid entry, try again." << endl;
-						continue;
-					}
-					else {
-						if (points >= units[option]->getHealth()) {
-							pair<string, int>* reward = units[option]->getReward();
-							points -= units[option]->getHealth();
-							units[option]->destroy();
-						}
-						else {
-							std::cout << ">>Insufficient points..." << endl;
-							continue;
-						}
-					}
-				}
-				catch (invalid_argument e) {
-					std::cout << ">>Invalid entry, try again." << endl;
-					continue;
-				}
-			}	
-		}
-		else if (x.first == "Ouch!") {
-			/*
-				check if player has Statue of Liberty card
-
-				x:1 => local military attacks player
-				x:2 => local military attacks everyone inside current borough
-				x:3 => all military attack all monster, gains Statue of Liberty
-			*/
-			switch (x.second) {
-			case 1:
-				currentLoc->attack(this);
-				break;
-			case 2:
-				currentLoc->attack();
-				break;
-			default:
-				GameManager::getMap()->globalAttack();
-				break;
+				pres << "Gained " << diff << " Health points!" << nl;
 			}
 		}
+		else if (type == "Attack") {
+			/*
+				1) check if Player is in Manhattan
+				2) if in Manhattan, attack others
+				3) else attack player(s) in Manhattan
+			*/
+
+			if (currentLoc->isManhattan()) {
+				for (const auto& p : GM->getPlayers()) {
+					if (!p->getCurrentLoc()->isManhattan())
+						p->takeDamage(result[type]);
+				}
+			}
+			else {
+				for (const auto& p : GM->getPlayers()) {
+					if (p->getCurrentLoc()->isManhattan())
+						p->takeDamage(result[type]);
+				}
+			}
+		}
+		else if (type == "Celebrity") {
+			if (GM->celebrityHolder == this) { //If player has Celebrity card
+				star += result[type];
+			}
+			else {
+				if (result[type] >= 3) {
+					pres << name << " has acquired the [Celebrity] card!"<< nl;
+					GM->celebrityHolder = this;
+					star += result[type] - 2;
+				}
+			}
+		}
+		else if (type == "Destruction") {
+			/*
+				Conditions:
+				1) Must destroy Units if player has enough points to do so
+				2) Cannot destroy Unit on the same turn it appears
+			*/
+
+			//Get potential targets
+			vector<pair<TileP, bool>> targets;
+			int minCost = 100;
+			for (const auto& t : *currentLoc->getTiles()) {
+				targets.push_back(make_pair(t, false));
+				if (t->getUnit()->getHp() < minCost) minCost = t->getUnit()->getHp();
+			}
+			
+			while (true) {
+				prt << "Here are all the Tiles in [" << currentLoc->getName() << "]" << nl;
+				for (size_t i = 0; i < targets.size(); i++)
+				{
+					prt << i << "-" << targets[i].first << nl;
+				}
+
+				if (result[type] < minCost) {
+					//Resolving Destruction will end automatically
+					prt << "Not enough Destruction points to do anything..." << nl;
+					break;
+				}
+				else {
+					prt << "Choose a Tile to attack..." << nl;
+					try {
+						getline(std::cin, input);
+						selection = stoi(input);
+
+						if (targets[selection].second) throw FailException("You've already attacked this tile!");
+						targets[selection].first->destroyUnit(this, result[type]);
+						targets[selection].second = true;
+					}
+					catch (const exception& e) {
+						pres << e.what() << nl;
+					}
+				}
+			}
+
+		}
+		else if (type == "Ouch!") {
+			/*
+				check if player has Statue of Liberty card
+				case 1 => local military attacks player
+				case 2 => local military attacks everyone inside current borough
+				case 3 => all military attack all monster, gains Statue of Liberty
+			*/
+			switch (result[type]) {
+			case 1:
+				currentLoc->attackPlayer(this);
+				break;
+			case 2:
+				currentLoc->attackPlayer();
+				break;
+			default:
+				GM->statueHolder = this;
+				GM->getMap()->globalAttack();
+			}
+		}
+		done = true;
+		for (const auto& d : tracker) {
+			//End resolving if all types have been resolved.
+			done = d.second ? done : false;
+		}
 	}
+
+	pres << "Dice resolving finished." << nl;
+	le
+	GameManager::checkWinCond(this); //Check win condition after each resolve
 }
 
-void Player::Move(Node* des) {
-	if (currentLoc != nullptr) {
-		cout << ">>leaving: " << currentLoc->getName() << endl;
-		currentLoc->exitZone(this);
-	}
-	cout << ">>Entering: " << des->getName() << endl;
-	currentLoc = des;
-	des->enterZone(this);
-	if (des->getName().find("Manhattan") != string::npos) {
-		GameManager::getMap()->setInManhattan(this);
-	}
-}
-
-bool Player::BuyCards(Card* card,int index) {
-	if (energy <= card->getCost()) {
-		return false;
-	}
-	if (card->getType() == "discard") {
-		card->use(this);
+void Player::Move(bool start) {
+	prt << "\n>> " << name << " is moving..." << endl;
+	if (start) {
+		prt << "Pick a starting zone from the following..." << std::endl;
 	}
 	else {
-		upgrades.push_back(card);
+		prt << "Pick a zone to travel to from the following..." << std::endl;
 	}
-	Deck::next(index);
+
+	//Get the list of zones connected to where the player is at
+	vector<Node*> destinations;
+
+	for (const auto& z : *currentLoc->getAdj()) {
+		if (z->isFree()) {
+			destinations.push_back(z);
+			prt << destinations.size()-1 << "-" << z->getName() << std::endl;
+		}
+	}
+
+	/*
+		If no one is in Manhattan then player must move there
+	*/
+
+	//Read input from user
+	std::string input;
+	int selection;
+
+	while (true) {
+		try {
+			std::getline(std::cin, input);
+			selection = stoi(input);
+			if (selection<0 || selection>=destinations.size()) throw exception();
+			break;
+		}
+		catch (...) {
+			prt << ">> Invalid entry, please try again..." << std::endl;
+		}
+	}
+	
+	prt << ">> " << getName() << " left [" << currentLoc->getName() <<"]"<< std::endl;
+	currentLoc->exitZone(this);
+
+	currentLoc = destinations[selection];
+	currentLoc->enterZone(this);
+	prt << ">> " << getName() << " entered [" << currentLoc->getName()<<"]" << std::endl;
+
+	prt << ">> " << getName() << " finished moving." << std::endl;
+}
+
+void Player::BuyCards() {
+	//if (energy <= card->getCost()) {
+	//	return false;
+	//}
+	//if (card->getType() == "discard") {
+	//	card->use(this);
+	//}
+	//else {
+	//	upgrades.push_back(card);
+	//}
+	//Deck::next(index);
 }
 
 void Player::takeDamage(int dmg) {
-	cout << ">>" << getName() << " has taken " << dmg << " damage!" << endl;
+	pres << getName() << " has taken " << dmg << " damage!" << nl;
 	health -= dmg;
 	if (health <= 0) {
-		cout << ">>" << getName() << " is defeated!!" << endl;
+		pres << getName() << " is defeated!!" << nl;
 	}
+
+	//If in Manhattan, has the option to stay or leave
+}
+
+void Player::collectResources(const pair<string, int>& resource) {
+	if (resource.first == "Health") {
+		health += resource.second;
+	}
+	else if (resource.first == "Star") {
+		star += resource.second;
+	}
+	else if (resource.first == "Energy") {
+		energy += resource.second;
+	}
+	pres << "Collected " << resource.first << " x" << resource.second << nl;
 }
 
 void Player::setupMonsters() {

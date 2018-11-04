@@ -1,0 +1,104 @@
+{
+  "tiles": [
+    {
+      "type": [0,7],
+      "stack": 22
+    },
+    {
+      "type": [1,8],
+      "stack": 8
+    },
+    {
+      "type": [3,8],
+      "stack": 3
+    },
+    {
+      "type": [5,8],
+      "stack": 3
+    },
+    {
+      "type": [2,9],
+      "stack": 3
+    },
+    {
+      "type": [4,9],
+      "stack": 3
+    },
+    {
+      "type": [6,9],
+      "stack": 3
+    }
+  ],
+  "units": [
+    {
+      "id": 0,
+      "name": "Small Office",
+      "health": 1,
+      "reward": [ "Star", 1 ],
+      "type": "b"
+    },
+    {
+      "id": 1,
+      "name": "Medium Office",
+      "health": 2,
+      "reward": [ "Star", 2 ],
+      "type": "b"
+    },
+    {
+      "id": 2,
+      "name": "Large Office",
+      "health": 3,
+      "reward": [ "Star", 3 ],
+      "type": "b"
+    },
+    {
+      "id": 3,
+      "name": "Small Hospital",
+      "health": 2,
+      "reward": [ "Star", 2 ],
+      "type": "b"
+    },
+    {
+      "id": 4,
+      "name": "Large Hospital",
+      "health": 3,
+      "reward": [ "Health", 3 ],
+      "type": "b"
+    },
+    {
+      "id": 5,
+      "name": "Power Plant",
+      "health": 2,
+      "reward": [ "Energy", 2 ],
+      "type": "b"
+    },
+    {
+      "id": 6,
+      "name": "Large Power Plant",
+      "health": 3,
+      "reward": [ "Energy", 3 ],
+      "type": "b"
+    },
+    {
+      "id": 7,
+      "name": "Jeep",
+      "health": 2,
+      "reward": [ "Health", 2 ],
+      "type": "m"
+    },
+    {
+      "id": 8,
+      "name": "Jet",
+      "health": 3,
+      "reward": [ "Energy", 3 ],
+      "type": "m"
+    },
+    {
+      "id": 9,
+      "name": "Tank",
+      "health": 4,
+      "reward": [ "Star", 3 ],
+      "type": "m"
+    }
+  ]
+}

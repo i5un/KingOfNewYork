@@ -6,7 +6,7 @@ int main() {
 	try
 	{
 		//enables debug mode
-		GameManager::StartGame(true);
+		GameManager::SetupGame(true);
 	}
 	catch (const std::exception e)
 	{

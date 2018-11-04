@@ -118,37 +118,46 @@
     <ClCompile Include="Card.cpp" />
     <ClCompile Include="Deck.cpp" />
     <ClCompile Include="Dice_Manager.cpp" />
-    <ClCompile Include="Driver_p1.cpp" />
     <ClCompile Include="Driver_p2.cpp" />
     <ClCompile Include="GameManager.cpp" />
     <ClCompile Include="Map.cpp" />
     <ClCompile Include="MapLoader.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="Player.cpp" />
+    <ClCompile Include="SpecialNode.cpp" />
+    <ClCompile Include="Tile.cpp" />
     <ClCompile Include="TokenManager.cpp" />
-    <ClCompile Include="UnitManager.cpp" />
+    <ClCompile Include="TileManager.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Card.h" />
     <ClInclude Include="Deck.h" />
     <ClInclude Include="Dice_Manager.h" />
     <ClInclude Include="GameManager.h" />
+    <ClInclude Include="Helper.h" />
     <ClInclude Include="json.hpp" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="MapLoader.h" />
     <ClInclude Include="Node.h" />
     <ClInclude Include="Player.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="SpecialNode.h" />
+    <ClInclude Include="Tile.h" />
     <ClInclude Include="TokenManager.h" />
-    <ClInclude Include="UnitManager.h" />
+    <ClInclude Include="TileManager.h" />
   </ItemGroup>
   <ItemGroup>
-    <None Include="Cards.json" />
+    <None Include="Resources\Cards.json" />
     <None Include="map\KingOfNewYork.map" />
     <None Include="map\map1.map" />
     <None Include="map\map2.map" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="README.txt" />
+    <Text Include="Resources\Tiles.json" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="NewYork.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

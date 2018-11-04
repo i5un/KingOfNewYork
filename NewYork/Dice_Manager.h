@@ -4,25 +4,26 @@
 #include<string>
 #include<time.h>
 #include<map>
+#include<ctime>
 
 using namespace std;
+typedef map<string, int> rollResult;
 
 class Dice_Manager
 {
 public:
 	Dice_Manager();
 	~Dice_Manager();
-	map<string, int>* rollDice();
-	void addDice();
+	const rollResult& rollDice(int extraDice=0,bool canReroll=true);
 private:
-	int chances;
-	int diceCount;
+	static int counter;
+	const int chances=3;
+	const int diceCount=6;
 	bool checkValide(string, vector<int>&);
 	void printResult(vector<int>&);
-	void summarize(vector<int>&);
 
-	map<string,int> final;
-	map<string,int> stat;
+	rollResult finalResult;
+	rollResult stat;
 	string getDiceName(int);
 };
 

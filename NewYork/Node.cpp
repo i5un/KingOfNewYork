@@ -1,89 +1,94 @@
 #include "Node.h"
 #include "Player.h"
+#include "TileManager.h"
 
 Node::Node(){}
 
-Node::Node(string name)
+Node::Node(string name,bool isManhattan)
 	:name(name)
 {
-}
+	//If currently constructing Manhattan, let SpecialNode class handle the following code
+	if (isManhattan || name=="ZoneZero")return;
 
+	for (size_t i = 0; i < 9; i++)
+	{
+		if (i < 3) {
+			pillOne.push_back(TileManager::instance()->drawTile(name));
+		}
+		else if (i < 6) {
+			pillTwo.push_back(TileManager::instance()->drawTile(name));
+		}
+		else {
+			pillThree.push_back(TileManager::instance()->drawTile(name));
+		}
+	}
+
+	availableTiles.push_back(pillOne.back());
+	availableTiles.push_back(pillTwo.back());
+	availableTiles.push_back(pillThree.back());
+}
 
 Node::~Node()
 {
-}
-
-string Node::getName() {
-	return name;
-}
-
-bool Node::enterZone(Player* player) {
-	if (isFree(player)) {
-		owners.push_back(player);
-		return true;
-	}
-	else {
-		return false;
-	}
-}
-
-void Node::exitZone(Player* player) {
-	owners.erase(remove(owners.begin(), owners.end(), player), owners.end());
-}
-
-vector<Node*>* Node::getAdj() {
-	return &adj;
 }
 
 void Node::addEdge(Node* node) {
 	adj.push_back(node);
 }
 
-vector<Player*>* Node::getOwners() {
-	return &owners;
-}
-
-bool Node::isFree(Player* player) {
-	if (name.find("Manhattan")!=string::npos) {
-		// This node is part of Manhattan, can only have 1 player
-		if (owners.size() == 1) {
-			// A player is already present or player is already in this particular zone, cannt move here. 
-			return false;
-		}
+bool Node::isFree() {
+	if (owners.size()<2) {
+		return true;
 	}
-	else {
-		// This node is not part of Manhattan
-		if (owners.size() >= 2) {
-			return false;
-		}
-	}
-	return true;
+	return false;
 }
 
-void Node::addUnit(Building* unit) {
-	units.push_back(unit);
+void Node::exitZone(Player* player) {
+	vector<Player*>::iterator index;
+	index = find(owners.begin(), owners.end(), player);
+	if(index!=owners.end()) owners.erase(index);
 }
 
-void Node::attack(Player* target) {
+void Node::attackPlayer(Player* specialTarget) {
 	// 1.Calculate damage
-
+	int dmg = 0;
+	for (const auto& tile : *getTiles()) {
+		if (tile->getUnit()->isHostile()) {
+			dmg++;
+		}
+	}
 	// 2.Attack players within borough
 
-	// Attack from Manhattan will be handled by the Map class
-	if (name.find("Manhattan") == string::npos) {
-		if (target == nullptr) {
-			cout << "Army is attacking all players inside " << name << endl;
-			// No target is provided, will attack all monsters within this borough
-		}
-		else {
-			// A target is provided. All military units will attack this target even if it's not inside this borough
-			cout << "Army is attacking " << target->getName() << " inside " << name << endl;
+	if (specialTarget != nullptr) {
+		cout << ">> Army is attacking " << specialTarget->getName() << " inside " << name << endl;
+		specialTarget->takeDamage(dmg);
+	}
+	else {
+		for (const auto& p : owners) {
+			cout << ">> Army is attacking " << p->getName() << " inside " << name << endl;
+			p->takeDamage(dmg);
 		}
 	}
 }
 
-void Node::getUnits(vector<Building*>& targets) {
-	for (auto &item : as_const(units)) {
-		targets.push_back(item);
+void Node::removeTile(int pillId) {
+	switch (pillId) {
+	case 1:
+		pillOne.pop_back();
+		break;
+	case 2:
+		pillOne.pop_back();
+		break;
+	default:
+		pillThree.pop_back();
+		break;
 	}
+}
+
+vector<TileP>* Node::getTiles() {
+	availableTiles.clear();
+	if (pillOne.size() > 0) availableTiles.push_back(pillOne.back());
+	if (pillTwo.size() > 0) availableTiles.push_back(pillTwo.back());
+	if (pillThree.size() > 0) availableTiles.push_back(pillThree.back());
+	return &availableTiles;
 }

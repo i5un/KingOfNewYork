@@ -1,4 +1,6 @@
 #include "Deck.h"
+#include "Card.h"
+#include"json.hpp"
 
 vector<Card*> Deck::cards;
 vector<Card*> Deck::shop;
@@ -10,7 +12,7 @@ void Deck::setup() {
 	/*
 		Read from Cards.json and parse the content
 	*/
-	ifstream stream("Cards.json");
+	ifstream stream(".\\Resources\\Cards.json");
 	nlohmann::json content;
 	try {
 		content = nlohmann::json::parse(stream);

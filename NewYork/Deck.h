@@ -2,8 +2,7 @@
 #include<vector>
 #include<iostream>
 #include<fstream>
-#include"json.hpp"
-#include"Player.h"
+#include "Player.h"
 
 using namespace std;
 class Card;

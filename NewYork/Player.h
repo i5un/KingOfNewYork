@@ -3,14 +3,13 @@
 #include<string>
 #include<map>
 
+#include"Helper.h"
 #include"Dice_Manager.h"
 #include"Node.h"
-#include"Card.h"
 #include"Deck.h"
-#include"UnitManager.h"
+#include "Card.h"
+#include"TileManager.h"
 #include"GameManager.h"
-
-using namespace std;
 
 class Player
 {
@@ -18,25 +17,29 @@ public:
 	Player();
 	~Player();
 	void pickMonster();
-	void RollDice();
-	void Move(Node*);
+	void Move(bool start=false);
 	void takeDamage(int);
-
-	bool BuyCards(Card*,int);
-	string getName(){ return name; }
+	void collectResources(const std::pair<string, int>&);
+	bool PlayTurn();
+	bool const isDead() { return dead; }
+	int getRank();
+	int const getStar() { return star; }
+	std::string getName(){ return name; }
 	Node* getCurrentLoc() { return currentLoc; }
 private:
-	static Player* celebrityHolder;
-	static Player* statueHolder;
-	static vector<std::string> Monsters;
-
-	std::string name;
-	int energy,star,health;
-	vector<Card*>upgrades;
+	static std::vector<std::string> Monsters;
+	std::map<string, bool> options;
+	std::vector<Card*>upgrades;
 	Dice_Manager* dm;
 	Node* currentLoc;
+	std::string name;
+	bool dead;
+	int energy, star, health;
+	int extraStar;
 
+	void BuyCards();
+	void RollDice();
 	void setupMonsters();
-	void ResolveDice(map<string, int>&);
+	void ResolveDice(std::map<string, int>&);
 };
 
